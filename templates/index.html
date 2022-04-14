@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+
+
+{% block submit %}
+<button class="btn btn-primary btn-lg btn-block" type="submit">Submit Grammar</button>
+{% endblock %}
+
+{% block body %}
+{% if errors %}
+<div class="alert alert-danger">
+    <div class="container">
+        <div class="alert-icon">
+            <i class="material-icons"></i>
+        </div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true"><i class="material-icons">×</i></span>
+        </button>
+        {% for error in errors %}
+        <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

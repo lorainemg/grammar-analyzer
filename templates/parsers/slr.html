@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block nav %}
+<ul class="nav flex-column">
+    <li class="nav-item">
+      <a class="nav-link" href="/">
+        Grammar <span class="sr-only">(current)</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/grammar/first_follows/">
+        First-Follows
+      </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/grammar/transformations/">
+          Grammar Transformations
+        </a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="/grammar/regular/">
+            Regular Grammar
+          </a>
+        </li>
+  </ul>
+
+  <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+    <span>Parsers</span>
+  </h6>
+  <ul class="nav flex-column mb-2">
+    <li class="nav-item">
+        <a class="nav-link" href="/parser/ll1/">
+          LL(1) Analyzer
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/parser/slr/">
+          SLR(1) Analyzer
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/parser/lr/">
+          LR(1) Analyzer
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/parser/lalr/">
+          LALR(1) Analyzer
+        </a>
+      </li>
+  </ul>
+{% endblock %}
+
+{% block body %}
+
+
+<h3>Automata</h3>
+<img src='../../static/img/lr0_automaton.svg'>
+
+<br>
+<h3>Tables</h3>
+<hr>
+
+{% if error %}
+<div class="alert alert-danger">
+  <div class="container">
+    <div class="alert-icon">
+      <i class="material-icons"></i>
+    </div>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true"><i class="material-icons">×</i></span>
+    </button>
+    {% for e in error %}
+       <p>{{e}}</p>
+    {% endfor %}
+      </div>
+    </div>
+    <br>
+{% endif %}
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-5">
+    <h4>Action</h4>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+        <thead>
+            <tr>
+            <th></th>
+            {% for elem in action_key %}
+                <th>{{elem}} </th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+            {% for key, elems in action %}
+            <tr>
+                <td>{{key}}</td>  
+            {% for elem in elems %} 
+            <td> 
+              {{elem}}
+            </td> 
+            {% endfor %}    
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-3">
+    <h2>Goto</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                <th></th>
+                {% for elem in goto_key %}
+                    <th>{{elem}} </th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+                {% for key, elems in goto %}
+                <tr>
+                    <td>{{key}}</td>  
+                {% for elem in elems %}                   
+                    <td>{{elem[0]}}</td>
+                {% endfor %}    
+                </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+        </div>
+    </div>
+</div>    
+{% if not error %}
+<h3>Text to Parse</h3>
+<hr>
+<center>
+    <form name='fword' method="POST" class="card p-1 col-md-10" action="/parser/2/">
+        <div col='col-md-1'></div>
+        <div class="input-group col-md-12">
+            <textarea rows="5" name="text" id="text" type="text" class="form-control">{% if word %}{{ word }}{% else %}{% endif %}</textarea>
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-secondary">Parse</button>
+            </div>
+        </div>
+    </form>
+</center>
+{% if parse_tree %}
+{% if errors_word %}
+<div class="alert alert-danger">
+    <div class="container">
+        <div class="alert-icon">
+            <i class="material-icons"></i>
+        </div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true"><i class="material-icons">×</i></span>
+        </button>
+        <b>Invalid String:</b> The string doesn't <i>{{word}}</i> belong to the language, please, insert a valid string
+    </div>
+</div>
+{% else %}
+<center>
+  <img src='../../static/img/slr_parse_tree.svg'>
+</center>
+{% endif %}
+{% endif %}
+{% endif %}
+{% endblock %}

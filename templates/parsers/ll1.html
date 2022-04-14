@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block nav %}
+<ul class="nav flex-column">
+    <li class="nav-item">
+      <a class="nav-link" href="/">
+        Grammar <span class="sr-only">(current)</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/grammar/first_follows/">
+        First-Follows
+      </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/grammar/transformations/">
+          Grammar Transformations
+        </a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="/grammar/regular/">
+            Regular Grammar
+          </a>
+        </li>
+  </ul>
+
+  <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+    <span>Parsers</span>
+  </h6>
+  <ul class="nav flex-column mb-2">
+    <li class="nav-item">
+        <a class="nav-link active" href="/parser/ll1/">
+          LL(1) Analyzer
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/parser/slr/">
+          SLR(1) Analyzer
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/parser/lr/">
+          LR(1) Analyzer
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/parser/lalr/">
+          LALR(1) Analyzer
+        </a>
+      </li>
+  </ul>
+{% endblock %}
+
+{% block body %}
+<br>
+<br>
+<h3>Parsing Table</h3>
+<hr>
+{% if errors %}
+<div class="alert alert-danger">
+  <div class="container">
+      <div class="alert-icon">
+          <i class="material-icons"></i>
+      </div>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true"><i class="material-icons">×</i></span>
+      </button>
+      {% for error in errors %}
+      <p>{{ error }}</p>
+      {% endfor %}
+  </div>
+</div>
+{% endif %}
+<div class="table-responsive">
+    <table class="table table-striped table-sm">
+    <thead>
+        <tr>
+        <th>NonTerminal</th>
+        <th>Terminal</th>
+        <th>Production</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for elem in table %}
+        <tr>  
+        <td>{{elem[0][0]}}</td>
+        <td>{{elem[0][1]}}</td> 
+        <td>{{elem[1]}}</td> 
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+</div>
+<br>
+
+{% if not errors %}
+<h3>Text to Parse</h3>
+<hr>
+<center>
+    <form name='fword' method="POST" class="card p-1 col-md-10" action="/parser/1/">
+        <div col='col-md-1'></div>
+        <div class="input-group col-md-12">
+            <textarea rows="5" name="text" id="text" type="text" class="form-control">{% if word %}{{ word }}{% else %}{% endif %}</textarea>
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-secondary">Parse</button>
+            </div>
+        </div>
+    </form>
+</center>
+{% if parse_tree %}
+{% if errors_word %}
+<div class="alert alert-danger">
+    <div class="container">
+        <div class="alert-icon">
+            <i class="material-icons"></i>
+        </div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true"><i class="material-icons">×</i></span>
+        </button>
+        <b>Invalid String:</b> The string <i>{{word}}</i> doesn't  belong to the language, please, insert a valid string
+    </div>
+</div>
+{% else %}
+<center>
+  <img src='../../static/img/ll1_parse_tree.svg'>
+</center>
+{% endif %}
+{% endif %}
+{% endif %}
+{% endblock %}

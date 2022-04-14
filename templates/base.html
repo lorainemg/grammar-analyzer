@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {% block head %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../../../favicon.ico">
+
+  <title>Grammar Analyzer</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="/static/css/docs.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="/static/css/dashboard.css" rel="stylesheet">
+  {% endblock %}
+</head>
+
+<body>  
+
+  <div class="container-fluid">
+    <div class="row">
+      <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+        <div class="sidebar-sticky profile-tabs">
+          {% block nav %}
+          <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" href="/">
+                  Grammar <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/grammar/first_follows/">
+                  First-Follows
+                </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="/grammar/transformations/">
+                    Grammar Transformations
+                  </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/grammar/regular/">
+                      Regular Grammar
+                    </a>
+                  </li>
+            </ul>
+      
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              <span>Parsers</span>
+              <!-- <a class="d-flex align-items-center text-muted" href="#">
+                <span data-feather="plus-circle"></span>
+              </a> -->
+            </h6>
+            <ul class="nav flex-column mb-2">
+              <li class="nav-item">
+                  <a class="nav-link" href="/parser/ll1/">
+                    LL(1) Analyzer
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/parser/slr/">
+                    SLR(1) Analyzer
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/parser/lr/">
+                    LR(1) Analyzer
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/parser/lalr/">
+                    LALR(1) Analyzer
+                  </a>
+                </li>
+            </ul>
+          {% endblock %}
+        </div>
+      </nav>
+
+      {% block import_export %}
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+          <h1 class="h1">Grammar</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2">
+            </div>
+          </div>
+        </div>
+        {% endblock %}
+
+        <!-- <canvas class="my-4" id="myChart" width="900" height="380"></canvas> -->
+        {% block grammar %}
+        <div class="row">
+         <div class="col-md-1"></div>
+          <form class="center-block col-md-10 order-md-1 card" name="fgrammar" method="POST" action="/grammar/">
+              <br>
+              <div class="row">
+                <div class="col-md-2 mb-3">
+                  <label class="bmd-label-static" for="startSymb">Start Symbol</label>
+                  <input type="text" class="form-control" name="startSymb" id="startSymb" placeholder="" value="{% if start %}{{start}}{% else %} {% endif %}" required>
+                  <div class="invalid-feedback">
+                    Only one start symbol is valid.
+                  </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="bmd-label-static" for="nonterminals">Non Terminals</label>
+                  <input type="text" class="form-control" name="nonterminals" id="nonterminals" placeholder="" value="{% if nonterminals %}{{nonterminals}}{% else %} {% endif %}" required>
+                  <div class="invalid-feedback">
+                    Valid Non Terminals are required.
+                  </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="bmd-label-static" for="terminals">Terminals</label>
+                  <input type="text" class="form-control" name="terminals" id="terminals" placeholder="" value="{% if terminals %}{{terminals}}{% else %} {% endif %}" required>
+                  <div class="invalid-feedback">
+                    Valid Terminals are required.
+                  </div>
+                </div>
+              </div>
+              <div class="row"> 
+                <div class="col-md-10 mb-3">
+                    <textarea rows="10" name="productions" id="productions" type="text" class="form-control">{% if productions %}{{productions}}{% else %} {% endif %}</textarea>
+                  <!-- <div class="input-group-append">
+                    <button type="submit" class="btn btn-secondary">Save</button>
+                  </div> -->
+                </div>
+              </div>
+              <br class="mb-4">
+              {% block submit %}
+              {% endblock %}
+            </form>
+          </div>
+          {% endblock %}
+
+          {% block body %}
+          {% endblock %}
+       
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="/static/js/jquery-slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <!-- <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="../../../../assets/js/vendor/jquery-slim.min.js"></script> -->
+  <script src="/static/js/popper.min.js"></script>
+  <script src="/static/js/jquery.min.js"></script>
+  <script src="/static/js/docs.min.js"></script>
+</body></html>

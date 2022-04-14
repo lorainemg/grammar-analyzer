@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block nav %}
+<ul class="nav flex-column">
+    <li class="nav-item">
+      <a class="nav-link" href="/">
+        Grammar <span class="sr-only">(current)</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/grammar/first_follows/">
+        First-Follows
+      </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/grammar/transformations/">
+          Grammar Transformations
+        </a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link active" href="/grammar/regular/">
+            Regular Grammar
+          </a>
+        </li>
+  </ul>
+
+  <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+    <span>Parsers</span>
+  </h6>
+  <ul class="nav flex-column mb-2">
+    <li class="nav-item">
+        <a class="nav-link" href="/parser/ll1/">
+          LL(1) Analyzer
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/parser/slr/">
+          SLR(1) Analyzer
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/parser/lr/">
+          LR(1) Analyzer
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/parser/lalr/">
+          LALR(1) Analyzer
+        </a>
+      </li>
+  </ul>
+{% endblock %}
+
+{% block body %}
+<br>
+
+{% if regular %}
+  <h3>Regular Expression</h3>
+  <hr>
+  <h5>{{ regexpr }}<h5>
+  <br>
+  <h3>Automata</h3>
+  <hr>
+  <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-sm-6 col-md-3"> 
+              <!-- <a href="#" class="thumbnail">  -->
+                <img src="{{name}}" alt="Generic placeholder thumbnail">
+              <!-- </a>  -->
+      </div> 
+  </div>
+{% else %}  
+<div class="alert alert-danger">
+  <div class="container">
+      <div class="alert-icon">
+          <i class="material-icons"></i>
+      </div>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true"><i class="material-icons">×</i></span>
+      </button>
+      <b>The Grammar is not regular</b>
+  </div>
+</div>{% endif %}
+{% endblock %}

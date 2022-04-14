@@ -1,0 +1,1 @@
+{"nonterminals": "T F", "productions": "  E -> E + T | T\r\nT-> T * F | F\r\nF -> ( E ) | id", "start": " E", "terminals": "+ * ( ) id"}

@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block nav %}
+<ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="/">
+            Grammar <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/grammar/first_follows/">
+            First-Follows
+          </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/grammar/transformations/">
+              Grammar Transformations
+            </a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/grammar/regular/">
+                Regular Grammar
+              </a>
+            </li>
+      </ul>
+
+      <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+        <span>Parsers</span>
+        <!-- <a class="d-flex align-items-center text-muted" href="#">
+          <span data-feather="plus-circle"></span>
+        </a> -->
+      </h6>
+      <ul class="nav flex-column mb-2">
+        <li class="nav-item">
+            <a class="nav-link" href="/parser/ll1/">
+              LL(1) Analyzer
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/parser/slr/">
+              SLR(1) Analyzer
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/parser/lr/">
+              LR(1) Analyzer
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/parser/lalr/">
+              LALR(1) Analyzer
+            </a>
+          </li>
+      </ul>
+{% endblock %}
+
+{% block body %}
+<br>
+<br>
+<div class="col-md-1"></div>
+    <h3>Grammar Transformations</h2>
+      <hr>
+        <br>
+        <div class="row"> 
+            <div class="col-md-3 mb-4">
+                <h4>Left Recursion</h4>
+                <br>
+                {% for prod in rec_prod %}
+                    <p>{{prod.Left}} -> {{prod.Right}}</p>
+                {% endfor %}
+            </div>
+            <div class="col-md-3 mb-4">
+                <h4>Left Refactoring</h4>
+                <br>
+                {% for prod in refactor_prod %}
+                    <p>{{prod.Left}} -> {{prod.Right}}</p>
+                {% endfor %}
+            </div>
+            <div class="col-md-4 mb-4">
+                <h4>Non Useless Productions</h4>
+                <br>
+                {% for prod in no_unreach_prd %}
+                    <p>{{prod.Left}} -> {{prod.Right}}</p>
+                {% endfor %}
+            </div>
+        </div>
+        <br class="mb-4">
+{% endblock %}
